@@ -14,8 +14,16 @@ const Summary = () => {
     const removeAll =  useCart((state)=> state.removeAll)
 
     useEffect(()=> {
-        
-    }, [])
+        if (searchParams.get("success")){
+            toast.success("Pago completado")
+            removeAll()
+        }
+
+        if (searchParams.get("canceled")){
+            toast.error("Algo salio mal")
+        }
+
+    }, [searchParams, removeAll])
 
 
     const totalPrice = items.reduce((total,item) => {
@@ -43,7 +51,7 @@ const Summary = () => {
                     <Currency value={totalPrice} />
                 </div>
             </div>
-            <Button className="w-full mt-6">
+            <Button onClick={onCheckout} className="w-full mt-6">
                 Pagar
             </Button>
         </div>
